@@ -21,6 +21,12 @@ def clickLogin(context):
 
 @then('User must successfully login to the Dashboard page')
 def verifyDashboard(context):
-    text = context.driver.find_element(By.XPATH, "//h1[normalize-space()='Dashboard']").text
-    assert text == "Dashboard"
-    context.driver.close()
+    try:
+        text = context.driver.find_element(By.XPATH, "//h1[normalize-space()='Dashboard']").text
+    except:
+        context.driver.close()
+        assert False, "Test Failed"
+
+    if text == "Dashboard":
+        context.driver.close()
+        assert True, "Test Passed"
